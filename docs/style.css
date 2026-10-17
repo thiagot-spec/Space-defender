@@ -1,0 +1,500 @@
+:root {
+  --bg1: #050b19;
+  --bg2: #0d1630;
+  --panel: rgba(10, 16, 30, 0.8);
+  --accent: #67d0ff;
+  --accent-2: #ff7a59;
+  --text: #eaf7ff;
+  --danger: #ff4d6d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top, #14284d 0%, var(--bg1) 45%, #02050b 100%);
+}
+
+.game-shell {
+  width: min(92vw, 960px);
+  padding: 20px 18px 16px;
+  border-radius: 18px;
+  background: rgba(8, 15, 28, 0.75);
+  border: 1px solid rgba(103, 208, 255, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--panel);
+  border: 1px solid rgba(103, 208, 255, 0.25);
+  font-size: 1.08rem;
+}
+
+.hud strong {
+  color: var(--accent);
+}
+
+#gameCanvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  border: 2px solid rgba(103, 208, 255, 0.4);
+  background: linear-gradient(#040a14, #071b2d 40%, #020a16);
+  box-shadow: inset 0 0 20px rgba(103, 208, 255, 0.15);
+}
+
+.build-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(155, 231, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(10, 16, 30, 0.9);
+}
+
+.build-panel[hidden] {
+  display: none;
+}
+
+.home-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid rgba(155, 231, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(10, 20, 25, 0.94);
+}
+
+.home-panel[hidden] {
+  display: none;
+}
+
+.home-summary {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(170px, 0.8fr) auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.home-summary > div:first-child {
+  display: grid;
+  gap: 5px;
+}
+
+.home-summary strong {
+  color: #c9efb2;
+}
+
+.home-summary span {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.hunger-control {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+.hunger-control progress {
+  width: 100%;
+  height: 12px;
+  accent-color: #8dcf75;
+}
+
+.home-panel button {
+  min-height: 42px;
+  border: 1px solid #91b582;
+  border-radius: 6px;
+  background: #324832;
+  color: #eff8e8;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.home-panel button:disabled {
+  border-color: #53605a;
+  background: #29332e;
+  color: #8e9a92;
+  cursor: not-allowed;
+}
+
+#earthButton {
+  border-color: #75b6d8;
+  background: #245573;
+  color: #edf8ff;
+}
+
+.farm-plots {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(90px, 1fr));
+  gap: 8px;
+}
+
+.farm-plot {
+  display: grid;
+  min-height: 86px;
+  justify-items: center;
+  align-content: center;
+  gap: 6px;
+  padding: 8px;
+  background: linear-gradient(#493728, #35291f) !important;
+  border-color: #92704b !important;
+  color: #f4e5c9 !important;
+}
+
+.farm-plot--growing {
+  background: linear-gradient(#294234, #23352d) !important;
+  border-color: #6d9f65 !important;
+}
+
+.farm-plot--ripe {
+  background: linear-gradient(#69552b, #453b22) !important;
+  border-color: #d6b95f !important;
+  color: #fff2c0 !important;
+}
+
+.crop-sprout {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.crop-sprout--young::before,
+.crop-sprout--ripe::before {
+  position: absolute;
+  bottom: 2px;
+  left: 11px;
+  width: 3px;
+  height: 17px;
+  background: #9bc77a;
+  content: '';
+}
+
+.crop-sprout--young::after {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  width: 17px;
+  height: 10px;
+  border-radius: 100% 0 100% 0;
+  background: #75bd62;
+  content: '';
+}
+
+.crop-sprout--ripe::before {
+  height: 20px;
+  background: #d6bd67;
+}
+
+.crop-sprout--ripe::after {
+  position: absolute;
+  top: 0;
+  left: 7px;
+  width: 11px;
+  height: 12px;
+  border-radius: 50% 50% 25% 25%;
+  background: #edcb62;
+  box-shadow: -6px 4px 0 -2px #d9b74e, 6px 5px 0 -2px #d9b74e;
+  content: '';
+}
+
+.build-panel > div:first-child {
+  display: grid;
+  gap: 5px;
+}
+
+.material-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.furniture-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.build-grid-viewport {
+  display: block;
+  flex: 0 0 260px;
+  width: 100%;
+  height: 260px;
+  min-height: 180px;
+  max-width: 100%;
+  overflow: auto;
+  border: 1px solid rgba(155, 231, 255, 0.28);
+  border-radius: 6px;
+  background: #07121a;
+  scrollbar-color: #607985 #101d25;
+}
+
+.house-build-grid {
+  display: grid;
+  gap: 2px;
+  width: max-content;
+  padding: 8px;
+}
+
+.house-build-cell {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid #52616a;
+  border-radius: 2px;
+  background: #17242c;
+  cursor: pointer;
+}
+
+.house-build-cell:hover {
+  outline: 2px solid #fff0a8;
+  outline-offset: 1px;
+}
+
+.house-build-cell--wood {
+  border-color: #e0a06b;
+  background: repeating-linear-gradient(90deg, #a4512f 0 7px, #70402c 7px 9px, #bd6638 9px 16px);
+  box-shadow: inset 0 3px 0 rgba(255, 205, 146, 0.34), inset 0 -3px 0 rgba(47, 22, 15, 0.5);
+}
+
+.house-build-cell--stone {
+  border-color: #c4ceca;
+  background-color: #858e8a;
+  background-image: linear-gradient(90deg, transparent 48%, #59625f 49% 52%, transparent 53%), linear-gradient(#c3c9c4 2px, transparent 2px), linear-gradient(90deg, #c3c9c4 2px, transparent 2px);
+  background-size: 24px 18px, 100% 18px, 24px 36px;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.26), inset 0 -2px 0 rgba(28, 37, 36, 0.4);
+}
+
+.house-build-cell--bunker {
+  border-color: #b2c9cc;
+  background: radial-gradient(circle at 5px 5px, #d8e5df 0 1px, transparent 2px), radial-gradient(circle at 27px 27px, #d8e5df 0 1px, transparent 2px), linear-gradient(135deg, #536b75, #293c47);
+  box-shadow: inset 0 0 0 4px rgba(169, 211, 216, 0.24), inset 0 0 0 6px rgba(8, 20, 27, 0.4);
+}
+
+.house-build-cell--bunker-hatch {
+  border: 2px solid #d4e2de;
+  background: linear-gradient(90deg, transparent 0 30%, #c6d6d4 31% 35%, transparent 36% 64%, #c6d6d4 65% 69%, transparent 70%), repeating-linear-gradient(180deg, #15242c 0 7px, #718891 8px 10px);
+  box-shadow: inset 0 0 0 4px #344e59, inset 0 0 0 6px #a9c5c8;
+}
+
+.house-build-cell--bunker-hatch::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 15px;
+  margin: 2px 0 0 auto;
+  border-radius: 3px;
+  background: #ffd86b;
+  box-shadow: 0 0 4px rgba(255, 216, 107, 0.7);
+}
+
+.house-build-cell--bunker-hatch-open {
+  background: linear-gradient(90deg, transparent 0 30%, #d5e1de 31% 35%, transparent 36% 64%, #d5e1de 65% 69%, transparent 70%), repeating-linear-gradient(180deg, #071019 0 7px, #637982 8px 10px);
+  box-shadow: inset 0 0 0 4px #253d48, inset 0 0 0 6px #a9c5c8;
+}
+
+.house-build-cell--furniture-bed {
+  background: linear-gradient(180deg, #172a32 0 42%, #e0e5d7 43% 61%, #9e5739 62% 82%, #4b3328 83%);
+  box-shadow: inset 0 0 0 3px #9c583c;
+}
+
+.house-build-cell--furniture-table {
+  background: radial-gradient(circle at 50% 36%, #f0bd61 0 5px, transparent 6px), linear-gradient(180deg, transparent 0 45%, #a85f37 46% 61%, transparent 62%), linear-gradient(90deg, transparent 0 30%, #72452e 31% 39%, transparent 40% 60%, #72452e 61% 69%, transparent 70%);
+}
+
+.house-build-cell--furniture-chair {
+  background: linear-gradient(90deg, transparent 0 30%, #82472f 31% 42%, transparent 43%), linear-gradient(180deg, transparent 0 39%, #b66d42 40% 58%, transparent 59%), linear-gradient(90deg, transparent 0 36%, #71402d 37% 45%, transparent 46% 62%, #71402d 63% 71%, transparent 72%);
+}
+
+.house-build-cell--furniture-cabinet {
+  background: linear-gradient(90deg, transparent 0 20%, #80452f 21% 79%, transparent 80%), linear-gradient(180deg, transparent 0 15%, #bd7650 16% 47%, #573b30 48% 52%, #bd7650 53% 83%, transparent 84%);
+  box-shadow: inset 0 0 0 2px rgba(240, 196, 133, 0.5);
+}
+
+.house-build-cell--furniture-bed {
+  background: linear-gradient(180deg, #172a32 0 42%, #e0e5d7 43% 61%, #9e5739 62% 82%, #4b3328 83%);
+  box-shadow: inset 0 0 0 3px #9c583c;
+}
+
+.house-build-cell--furniture-table {
+  background: radial-gradient(circle at 50% 36%, #f0bd61 0 5px, transparent 6px), linear-gradient(180deg, transparent 0 45%, #a85f37 46% 61%, transparent 62%), linear-gradient(90deg, transparent 0 30%, #72452e 31% 39%, transparent 40% 60%, #72452e 61% 69%, transparent 70%);
+}
+
+.house-build-cell--furniture-chair {
+  background: linear-gradient(90deg, transparent 0 30%, #82472f 31% 42%, transparent 43%), linear-gradient(180deg, transparent 0 39%, #b66d42 40% 58%, transparent 59%), linear-gradient(90deg, transparent 0 36%, #71402d 37% 45%, transparent 46% 62%, #71402d 63% 71%, transparent 72%);
+}
+
+.house-build-cell--furniture-cabinet {
+  background: linear-gradient(90deg, transparent 0 20%, #80452f 21% 79%, transparent 80%), linear-gradient(180deg, transparent 0 15%, #bd7650 16% 47%, #573b30 48% 52%, #bd7650 53% 83%, transparent 84%);
+  box-shadow: inset 0 0 0 2px rgba(240, 196, 133, 0.5);
+}
+
+.furniture-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.build-panel .furniture-picker button {
+  min-height: 38px;
+  padding: 0 12px;
+  border-color: #bd7650;
+  background: #50382d;
+  color: #fff0d6;
+  font-size: 0.88rem;
+}
+
+.build-panel .furniture-picker button[aria-pressed="true"] {
+  outline: 2px solid #fff0a8;
+  outline-offset: 2px;
+}
+
+.house-build-cell--separator {
+  box-shadow: inset 0 -3px 0 #ffcd79;
+}
+
+#gatherButton,
+#expandGridButton {
+  border-color: #e2a05f;
+  background: #573923;
+  color: #fff0d6;
+}
+
+.build-panel strong {
+  color: var(--accent);
+}
+
+.build-panel span {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.build-panel button {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid #9be7ff;
+  border-radius: 6px;
+  background: #9be7ff;
+  color: #07121d;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.build-panel button:disabled {
+  border-color: #465562;
+  background: #263540;
+  color: #a8b7c2;
+  cursor: not-allowed;
+}
+
+.build-panel .material-picker button[aria-pressed="true"] {
+  outline: 2px solid #fff0a8;
+  outline-offset: 2px;
+}
+
+.build-panel .material-picker button {
+  min-height: 38px;
+  padding: 0 12px;
+  border-color: #9ba9b0;
+  background: #253844;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.build-panel .material-picker button:disabled {
+  opacity: 0.55;
+}
+
+.build-panel .material-picker button[aria-pressed="true"]:disabled {
+  outline: 2px solid #fff0a8;
+}
+
+.build-panel #hatchBuildButton {
+  border-color: #d3bd75;
+  background: #394b4d;
+  color: #fff0c2;
+}
+
+.build-panel .furniture-picker button {
+  min-height: 38px;
+  padding: 0 12px;
+  border-color: #bd7650;
+  background: #50382d;
+  color: #fff0d6;
+  font-size: 0.88rem;
+}
+
+.build-panel .furniture-picker button[aria-pressed="true"] {
+  outline: 2px solid #fff0a8;
+  outline-offset: 2px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: rgba(234, 247, 255, 0.8);
+  padding-top: 12px;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 700px) {
+  .hud,
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .build-panel {
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .material-picker {
+    justify-content: center;
+  }
+
+  .home-summary {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .farm-plots {
+    grid-template-columns: repeat(3, minmax(82px, 1fr));
+  }
+}
+
+.build-panel .material-picker,
+.build-panel .furniture-picker {
+  display: flex;
+  justify-content: center;
+}

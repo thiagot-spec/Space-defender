@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Defender</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-shell">
+      <div class="hud">
+        <div><span>Punkte:</span> <strong id="score">0</strong></div>
+        <div><span>Leben:</span> <strong id="lives">20</strong></div>
+        <div><span>Level:</span> <strong id="level">1</strong></div>
+        <div><span>Bomben:</span> <strong id="bombs">∞</strong></div>
+      </div>
+
+      <canvas id="gameCanvas" width="900" height="600" aria-label="Space Defender Spiel"></canvas>
+
+      <section id="buildPanel" class="build-panel" hidden aria-live="polite">
+        <div>
+          <strong id="buildStatus"></strong>
+          <span id="resources"></span>
+        </div>
+        <div class="build-grid-viewport">
+          <div id="houseBuildGrid" class="house-build-grid" role="grid" aria-label="Haus und Bunker bauen"></div>
+        </div>
+        <div class="material-picker" aria-label="Baumaterial auswählen">
+          <button id="woodBuildButton" type="button" data-material="wood">Feuriges Holz</button>
+          <button id="stoneBuildButton" type="button" data-material="stone">Feuriger Stein</button>
+          <button id="bunkerBuildButton" type="button" data-material="bunker">Bunkermaterial</button>
+          <button id="hatchBuildButton" type="button">Falltür + Hebel</button>
+        </div>
+        <div class="furniture-picker" aria-label="Möbel auswählen">
+          <button id="bedBuildButton" type="button">Bett</button>
+          <button id="tableBuildButton" type="button">Tisch</button>
+          <button id="chairBuildButton" type="button">Stuhl</button>
+          <button id="cabinetBuildButton" type="button">Schrank</button>
+        </div>
+        <button id="gatherButton" type="button">Material abbauen +5</button>
+        <button id="expandGridButton" type="button">Baufläche erweitern</button>
+        <button id="buildButton" type="button" disabled>Haus fertigstellen</button>
+      </section>
+
+      <section id="homePanel" class="home-panel" hidden aria-live="polite">
+        <div class="home-summary">
+          <div>
+            <strong id="homeStatus">Du wohnst jetzt in deinem Haus.</strong>
+            <span id="farmSupplies">Saatgut: 3 | Essen: 0</span>
+          </div>
+          <div class="hunger-control">
+            <label for="hungerMeter">Hunger</label>
+            <progress id="hungerMeter" max="100" value="100"></progress>
+            <span id="hungerValue">100%</span>
+          </div>
+          <button id="eatButton" type="button" disabled>Essen</button>
+          <button id="earthButton" type="button">Zur Erde fliegen</button>
+        </div>
+        <div id="farmPlots" class="farm-plots" aria-label="Farmbeete"></div>
+      </section>
+
+      <div class="controls">
+        <span id="movementControl">Fliegen: Maus bewegen</span>
+        <span id="shootControl">Feuern: Leertaste</span>
+        <span id="bombControl">Atombombe: Rechtsklick</span>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
